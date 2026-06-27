@@ -5,9 +5,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface NetworkRetrofit {
-    @GET("/")
+    @GET("api")
     Call<String> getPins();
 
-    @POST("/")
+    @POST("api")
     Call<String> setPins();
 }
