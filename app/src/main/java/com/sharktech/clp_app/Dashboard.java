@@ -17,8 +17,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Dashboard extends AppCompatActivity {
-    private String pin;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +29,6 @@ public class Dashboard extends AppCompatActivity {
         });
 
         lerdados();
-        Log.d("Pin", "Pin: " + pin);
     }
 
     public void lerdados() {
@@ -41,7 +38,9 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null){
-                    //TODO: implementar o retorno da call
+                    String res = response.body();
+                    res = res.replace("{", "").replace("}", "");
+
                 } else {
                     Toast.makeText(Dashboard.this, "Não deu o if", Toast.LENGTH_LONG).show();
                 }
@@ -51,7 +50,7 @@ public class Dashboard extends AppCompatActivity {
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(Dashboard.this, "Falha ao iniciar a call", Toast.LENGTH_LONG).show();
                 t.printStackTrace();
-                Log.e("Pin", t.getMessage());
+                Log.e("LOG", t.getMessage());
             }
         });
     }

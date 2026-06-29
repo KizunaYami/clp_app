@@ -4,10 +4,10 @@ import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "http://192.168.1.53:8080/";
+    private static final String BASE_URL = "http://192.168.1.41:8080/";
     public static NetworkRetrofit networkRetrofit;
 
     public static NetworkRetrofit getNetworkRetrofit() {
@@ -33,7 +33,7 @@ public class RetrofitClient {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
 
             networkRetrofit = retrofit.create(NetworkRetrofit.class);
