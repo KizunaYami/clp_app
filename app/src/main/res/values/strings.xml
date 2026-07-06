@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">LabRemotoCLP</string>
+    <string name="app_name">CLP Controller</string>
+    <string name="lab_clp">Laboratório CLP</string>
+    <string name="monitoring_system">Sistema de Monitoramento Remoto</string>
+    <string name="entradas_digitais">ENTRADAS DIGITAIS</string>
+    <string name="saidas_digitais">SAÍDAS DIGITAIS</string>
+    <string name="entradas_analogicas">ENTRADAS ANALÓGICAS</string>
+    <string name="automation_engineering">Oficina de Inventividade</string>
+    <string name="btn_ler">ATUALIZAR STATUS</string>
+    <string name="status_saidas">Status das Saídas Digitais</string>
+    <string name="controle_entradas">Controle de Entradas Digitais</string>
+    <string name="leituras_analogicas">Leituras de Entradas Analógicas</string>
+    <string name="btn_escrever">ATUALIZAR CLP</string>
 </resources>

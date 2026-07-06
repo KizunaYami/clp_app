@@ -7,9 +7,9 @@ import retrofit2.http.POST;
 
 public interface ApiService {
 
-    @GET("api")
+    @GET("/")
     Call<String> lerSaidaDigitais();
 
-    @POST("api")
+    @POST("/")
     Call<String> escreverInterfaces(@Body String mensagem);
 }

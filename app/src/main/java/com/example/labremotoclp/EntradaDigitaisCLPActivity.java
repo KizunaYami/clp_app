@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,21 +19,16 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("ENTRADAS DIGITAIS DO CLP");
         setContentView(R.layout.activity_entrada_digitais_clp);
 
         for (int i = 0; i < getSwitchs().length; i++) {
-            Switch sw = getSwitchs()[i];
+            MaterialSwitch sw = getSwitchs()[i];
             TextView tv = getTextViews()[i];
 
             sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        sw.setText("on");
-                    } else {
-                        sw.setText("off");
-                    }
+                    // Texto removido para manter o switch limpo conforme o novo design
                 }
             });
         }
@@ -110,8 +106,8 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Dados lidos da CLP", Toast.LENGTH_SHORT).show();
     }
 
-    private Switch[] getSwitchs() {
-        return new Switch[]{findViewById(R.id.switch1), findViewById(R.id.switch2), findViewById(R.id.switch3), findViewById(R.id.switch4), findViewById(R.id.switch5), findViewById(R.id.switch6), findViewById(R.id.switch7), findViewById(R.id.switch8), findViewById(R.id.switch9), findViewById(R.id.switch10)};
+    private MaterialSwitch[] getSwitchs() {
+        return new MaterialSwitch[]{findViewById(R.id.switch1), findViewById(R.id.switch2), findViewById(R.id.switch3), findViewById(R.id.switch4), findViewById(R.id.switch5), findViewById(R.id.switch6), findViewById(R.id.switch7), findViewById(R.id.switch8), findViewById(R.id.switch9), findViewById(R.id.switch10)};
     }
 
     private TextView[] getTextViews() {
@@ -119,10 +115,10 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
     }
 
     public void escrever(View view) {
-        Switch[] sws = getSwitchs();
+        MaterialSwitch[] sws = getSwitchs();
 
         for (int i = 0; i < sws.length; i++) {
-            Switch sw = sws[i];
+            MaterialSwitch sw = sws[i];
 
             if (sw.isChecked()) {
                 Interface.atualizarInterface("IN" + (i + 1), Interface.STATUS_ATIVADO);
