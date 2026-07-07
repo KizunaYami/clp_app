@@ -8,14 +8,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitClient {
-    //private static final String BASE_URL = "http://192.168.1.41:8080/";
-
-    private static final String BASE_URL = "http://170.233.228.157:8011/";
+    private static final String BASE_URL = "http://170.233.228.157:8019/";
     private static ApiService apiService;
 
     public static ApiService getApiService() {
         if (apiService == null) {
-            String credentials = Credentials.basic("GRUPO1", "12A4");
+            String credentials = Credentials.basic("admin", "1234");
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                         .addInterceptor(chain -> {
                             Request original = chain.request();

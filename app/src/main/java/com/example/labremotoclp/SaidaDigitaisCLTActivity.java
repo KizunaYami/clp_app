@@ -4,45 +4,55 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SaidaDigitaisCLTActivity extends AppCompatActivity {
+    
+    private ImageView[] imageViews;
+    private TextView[] textViews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("SAÍDAS DIGITAIS DO CLP");
         setContentView(R.layout.activity_saida_digitais_clp);
+        setTitle("SAÍDAS DIGITAIS DO CLP");
+        
+        imageViews = new ImageView[]{
+            findViewById(R.id.imageView1), findViewById(R.id.imageView2), 
+            findViewById(R.id.imageView3), findViewById(R.id.imageView4), 
+            findViewById(R.id.imageView5), findViewById(R.id.imageView6), 
+            findViewById(R.id.imageView7), findViewById(R.id.imageView8), 
+            findViewById(R.id.imageView9), findViewById(R.id.imageView10)
+        };
+
+        textViews = new TextView[]{
+            findViewById(R.id.textView1), findViewById(R.id.textView2),
+            findViewById(R.id.textView3), findViewById(R.id.textView4),
+            findViewById(R.id.textView5), findViewById(R.id.textView6),
+            findViewById(R.id.textView7), findViewById(R.id.textView8),
+            findViewById(R.id.textView9), findViewById(R.id.textView10)
+        };
+
+        // Map labels to actual ESP32 Output Pins
+        String[] outputKeys = Interface.getOutputKeys();
+        for (int i = 0; i < textViews.length; i++) {
+            textViews[i].setText("PIN " + outputKeys[i].replace("Output_", ""));
+        }
+        
         lerDadosCLP();
     }
 
     public void ler(View view) {
         lerDadosCLP();
-    }
-
-    private void atualizarInterfaces(String dados) {
-        ImageView[] imageViews = {findViewById(R.id.imageView1), findViewById(R.id.imageView2), findViewById(R.id.imageView3), findViewById(R.id.imageView4), findViewById(R.id.imageView5), findViewById(R.id.imageView6), findViewById(R.id.imageView7), findViewById(R.id.imageView8), findViewById(R.id.imageView9), findViewById(R.id.imageView10)};
-        String[] dadosInterfaces = dados.split(",");
-
-        for (int i = 0; i < imageViews.length; i++) {
-            String[] dadoInterface = dadosInterfaces[i].split(":");
-            int statusInterface = Integer.parseInt(dadoInterface[1]);
-            ImageView imageView = imageViews[i];
-
-            if (Interface.STATUS_ATIVADO == statusInterface) {
-                imageView.setImageResource(android.R.drawable.presence_online);
-            } else if (Interface.STATUS_DESABILITADO == statusInterface) {
-                imageView.setImageResource(android.R.drawable.presence_busy);
-            } else {
-                Log.i("LOG", "Status desconhecido");
-            }
-        }
-        Toast.makeText(getApplicationContext(), "Dados lidos da CLP", Toast.LENGTH_SHORT).show();
     }
 
     private void lerDadosCLP() {
@@ -52,22 +62,31 @@ public class SaidaDigitaisCLTActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    String textoResultado = response.body();
-                    textoResultado = textoResultado.replace("{", "");
-                    textoResultado = textoResultado.replace("}", "");
-
-                    Log.d("LOG", "dados lidos da clp: " + textoResultado);
-                    atualizarInterfaces(textoResultado);
-                } else {
-                    Log.e("LOG", "Código de erro do servidor: " + response.code());
+                    try {
+                        JSONObject json = new JSONObject(response.body());
+                        atualizarStatus(json);
+                    } catch (Exception e) {
+                        Log.e("LOG", "Erro JSON", e);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Falha ao buscar dados da CLP", Toast.LENGTH_SHORT).show();
-                Log.e("LOG", "Falha na requisição", t);
+                Toast.makeText(getApplicationContext(), "Falha ao ler dados", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void atualizarStatus(JSONObject json) {
+        String[] outputKeys = Interface.getOutputKeys();
+        for (int i = 0; i < imageViews.length; i++) {
+            int status = json.optInt(outputKeys[i], 0);
+            if (status == 1) {
+                imageViews[i].setImageResource(android.R.drawable.presence_online);
+            } else {
+                imageViews[i].setImageResource(android.R.drawable.presence_busy);
+            }
+        }
     }
 }
