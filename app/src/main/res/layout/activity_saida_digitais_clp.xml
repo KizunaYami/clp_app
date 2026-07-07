@@ -351,7 +351,7 @@
         android:layout_height="64dp"
         android:layout_margin="24dp"
         android:onClick="ler"
-        android:text="@string/btn_ler"
+        android:text="ATUALIZAR STATUS"
         android:textSize="16sp"
         android:textStyle="bold"
         app:cornerRadius="16dp"
