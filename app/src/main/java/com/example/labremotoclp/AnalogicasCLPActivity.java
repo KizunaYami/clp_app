@@ -130,8 +130,6 @@ public class AnalogicasCLPActivity extends AppCompatActivity {
             // DAC
             json.put("DAC_Ch0", seekBarDAC0.getProgress());
             json.put("DAC_Ch1", seekBarDAC1.getProgress());
-            Toast.makeText(this, "Enviando: " + seekBarDAC0.getProgress(), Toast.LENGTH_SHORT).show();
-            Log.d("LOG", "Progress DAC0: " + seekBarDAC0.getProgress());
             
             // Inversor
             if (acaoPendente != null) {

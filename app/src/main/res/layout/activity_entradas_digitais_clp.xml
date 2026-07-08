@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
-    tools:context=".SaidaDigitaisCLTActivity">
+    tools:context=".EntradaDigitaisCLPActivity">
 
     <!-- Top Banner -->
     <View
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="@string/entradas_digitais"
+        android:text="STATUS DAS PORTAS"
         android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="@string/status_saidas"
+        android:text="E Status na Placa"
         android:textColor="#E0E0E0"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
