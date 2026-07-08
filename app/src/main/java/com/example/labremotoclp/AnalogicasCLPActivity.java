@@ -128,8 +128,8 @@ public class AnalogicasCLPActivity extends AppCompatActivity {
             JSONObject json = new JSONObject();
             
             // DAC
-            json.put("DAC_Ch0", seekBarDAC0.getProgress());
-            json.put("DAC_Ch1", seekBarDAC1.getProgress());
+            json.put("DAC_Ch0", (seekBarDAC0.getProgress() / 4095.0f) * 10.0f);
+            json.put("DAC_Ch1", (seekBarDAC1.getProgress() / 4095.0f) * 10.0f);
             
             // Inversor
             if (acaoPendente != null) {
