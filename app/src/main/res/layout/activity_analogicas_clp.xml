@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
-    tools:context=".EntradaAnalogicasCLPActivity">
+    tools:context=".AnalogicasCLPActivity">
 
     <!-- Top Banner -->
     <View
@@ -235,7 +235,7 @@
                         android:id="@+id/seekBarDAC0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="100" />
+                        android:max="4095" />
 
                     <TextView
                         android:id="@+id/tvDAC1"
@@ -248,7 +248,7 @@
                         android:id="@+id/seekBarDAC1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="100" />
+                        android:max="4095" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

@@ -7,17 +7,17 @@ public class Interface {
     public final static int STATUS_DESABILITADO = 0;
     public final static int STATUS_ATIVADO = 1;
 
-    // Exact pin mapping from ESP32 C++ code:
-    // const uint8_t pinos_entradas_digitais[10] = { 36, 39, 34, 35, 0, 2, 5, 12, 15, 14 };
+    // Updated pin mapping based on user request:
+    // Input pins: 36, 39, 34, 35, 14, 12, 5, 13, 2, 15
     private final static String[] INPUT_KEYS = {
-        "Input_36", "Input_39", "Input_34", "Input_35", "Input_0", 
-        "Input_2", "Input_5", "Input_12", "Input_15", "Input_14"
+        "Input_36", "Input_39", "Input_34", "Input_35", "Input_14", 
+        "Input_12", "Input_5", "Input_13", "Input_2", "Input_15"
     };
 
-    // const uint8_t pinos_saidas_digitais[10]   = { 4, 18, 19, 25, 26, 32, 33, 23, 13, 27 };
+    // Output pins: 4, 19, 18, 17, 27, 23, 26, 25, 33, 32
     private final static String[] OUTPUT_KEYS = {
-        "Output_4", "Output_18", "Output_19", "Output_25", "Output_26",
-        "Output_32", "Output_33", "Output_23", "Output_13", "Output_27"
+        "Output_4", "Output_19", "Output_18", "Output_17", "Output_27",
+        "Output_23", "Output_26", "Output_25", "Output_33", "Output_32"
     };
 
     private final static Map<String, Object> statusInterfaces = new LinkedHashMap<>();

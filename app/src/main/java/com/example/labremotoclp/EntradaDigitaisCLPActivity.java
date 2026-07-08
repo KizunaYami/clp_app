@@ -27,15 +27,15 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Using the layout with ImageViews for monitoring inputs
-        setContentView(R.layout.activity_saida_digitais_clp);
+        setContentView(R.layout.activity_entradas_digitais_clp);
         setTitle("ENTRADAS (SENSORES)");
 
         imageViews = getImageViews();
         tvLabels = getTextViews();
+        tvWifi = findViewById(R.id.tvWifi);
+        tvHeap = findViewById(R.id.tvHeap);
         
-        // Wifi and Heap might not be in activity_saida_digitais_clp.xml, 
-        // let's check if we need to add them or if they are in activity_entrada_digitais_clp
-        // Based on previous design, I'll update the labels to show pin numbers
+        // Update labels to show actual ESP32 pins
         String[] keys = Interface.getInputKeys();
         for (int i = 0; i < tvLabels.length; i++) {
             tvLabels[i].setText("PIN " + keys[i].replace("Input_", ""));
@@ -45,7 +45,7 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
     }
 
     private void lerDadosCLP() {
-        Call<String> call = RetrofitClient.getApiService().lerSaidaDigitais();
+        Call<String> call = RetrofitClient.getApiService().lerDadosClp();
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -75,6 +75,12 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
                 imageViews[i].setImageResource(android.R.drawable.presence_busy);
             }
         }
+
+        // Diagnostics moved to this screen
+        int wifi = json.optInt("wifi", 0);
+        int heap = json.optInt("heap", 0);
+        if (tvWifi != null) tvWifi.setText(String.format(Locale.getDefault(), "%d%%", wifi));
+        if (tvHeap != null) tvHeap.setText(String.format(Locale.getDefault(), "%d KB", heap / 1024));
     }
 
     private ImageView[] getImageViews() {

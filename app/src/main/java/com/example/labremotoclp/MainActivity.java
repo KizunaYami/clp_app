@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void abrirEntradasAnalogicasCLP(View view) {
-        Intent intent = new Intent(this, EntradaAnalogicasCLPActivity.class);
+        Intent intent = new Intent(this, AnalogicasCLPActivity.class);
         startActivity(intent);
     }
 }

@@ -30,7 +30,7 @@
             android:name=".EntradaDigitaisCLPActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".EntradaAnalogicasCLPActivity"
+            android:name=".AnalogicasCLPActivity"
             android:exported="false"></activity>
     </application>
 

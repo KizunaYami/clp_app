@@ -3,7 +3,6 @@ package com.example.labremotoclp;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EntradaAnalogicasCLPActivity extends AppCompatActivity {
+public class AnalogicasCLPActivity extends AppCompatActivity {
     
     private SeekBar seekBarDAC0, seekBarDAC1, seekBarFreq;
     private TextView tvTempValue, tvCurrentValue;
@@ -30,7 +29,7 @@ public class EntradaAnalogicasCLPActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entrada_analogicas_clp);
+        setContentView(R.layout.activity_analogicas_clp);
         setTitle("TELEMETRIA E CONTROLE");
 
         tvTempValue = findViewById(R.id.tvTempValue);
@@ -50,7 +49,8 @@ public class EntradaAnalogicasCLPActivity extends AppCompatActivity {
         seekBarDAC0.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvDAC0Label.setText(String.format(Locale.getDefault(), "Canal 0: %.1fV", progress / 10.0f));
+                float volts = (progress / 4095.0f) * 10.0f;
+                tvDAC0Label.setText(String.format(Locale.getDefault(), "Canal 0: %.1fV (%d)", volts, progress));
             }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -59,7 +59,8 @@ public class EntradaAnalogicasCLPActivity extends AppCompatActivity {
         seekBarDAC1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvDAC1Label.setText(String.format(Locale.getDefault(), "Canal 1: %.1fV", progress / 10.0f));
+                float volts = (progress / 4095.0f) * 10.0f;
+                tvDAC1Label.setText(String.format(Locale.getDefault(), "Canal 1: %.1fV (%d)", volts, progress));
             }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -78,7 +79,7 @@ public class EntradaAnalogicasCLPActivity extends AppCompatActivity {
     }
 
     private void lerDadosCLP() {
-        Call<String> call = RetrofitClient.getApiService().lerSaidaDigitais();
+        Call<String> call = RetrofitClient.getApiService().lerDadosClp();
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -127,8 +128,10 @@ public class EntradaAnalogicasCLPActivity extends AppCompatActivity {
             JSONObject json = new JSONObject();
             
             // DAC
-            json.put("DAC_Ch0", seekBarDAC0.getProgress() / 10.0f);
-            json.put("DAC_Ch1", seekBarDAC1.getProgress() / 10.0f);
+            json.put("DAC_Ch0", seekBarDAC0.getProgress());
+            json.put("DAC_Ch1", seekBarDAC1.getProgress());
+            Toast.makeText(this, "Enviando: " + seekBarDAC0.getProgress(), Toast.LENGTH_SHORT).show();
+            Log.d("LOG", "Progress DAC0: " + seekBarDAC0.getProgress());
             
             // Inversor
             if (acaoPendente != null) {

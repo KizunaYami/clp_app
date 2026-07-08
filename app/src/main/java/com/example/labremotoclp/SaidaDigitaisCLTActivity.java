@@ -12,8 +12,6 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 
 import org.json.JSONObject;
 
-import java.util.Locale;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,20 +19,17 @@ import retrofit2.Response;
 public class SaidaDigitaisCLTActivity extends AppCompatActivity {
     
     private MaterialSwitch[] switches;
-    private TextView tvWifi, tvHeap;
     private TextView[] tvLabels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Using layout with Switches for controlling outputs
-        setContentView(R.layout.activity_entrada_digitais_clp);
+        setContentView(R.layout.activity_saidas_digitais_clp);
         setTitle("SAÍDAS (RELÉS)");
 
         switches = getSwitchs();
         tvLabels = getTextViews();
-        tvWifi = findViewById(R.id.tvWifi);
-        tvHeap = findViewById(R.id.tvHeap);
 
         // Map labels to actual ESP32 Output Pins
         String[] keys = Interface.getOutputKeys();
@@ -46,7 +41,7 @@ public class SaidaDigitaisCLTActivity extends AppCompatActivity {
     }
 
     private void lerDadosCLP() {
-        Call<String> call = RetrofitClient.getApiService().lerSaidaDigitais();
+        Call<String> call = RetrofitClient.getApiService().lerDadosClp();
 
         call.enqueue(new Callback<String>() {
             @Override
@@ -75,12 +70,6 @@ public class SaidaDigitaisCLTActivity extends AppCompatActivity {
                 switches[i].setChecked(status == 1);
             }
         }
-
-        // Diagnostics are in this layout
-        int wifi = json.optInt("wifi", 0);
-        int heap = json.optInt("heap", 0);
-        if (tvWifi != null) tvWifi.setText(String.format(Locale.getDefault(), "%d%%", wifi));
-        if (tvHeap != null) tvHeap.setText(String.format(Locale.getDefault(), "%d KB", heap / 1024));
     }
 
     private MaterialSwitch[] getSwitchs() {
