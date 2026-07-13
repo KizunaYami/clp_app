@@ -35,10 +35,12 @@ public class EntradaDigitaisCLPActivity extends AppCompatActivity {
         tvWifi = findViewById(R.id.tvWifi);
         tvHeap = findViewById(R.id.tvHeap);
         
-        // Update labels to show actual ESP32 pins
+        // Update labels with names from web version
         String[] keys = Interface.getInputKeys();
+        String[] names = Interface.getInputNames();
         for (int i = 0; i < tvLabels.length; i++) {
-            tvLabels[i].setText("PIN " + keys[i].replace("Input_", ""));
+            String label = names[i] + " (GPIO " + keys[i].replace("Input_", "") + ")";
+            tvLabels[i].setText(label);
         }
 
         lerDadosCLP();

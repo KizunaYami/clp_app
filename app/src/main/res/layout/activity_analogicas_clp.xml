@@ -66,20 +66,38 @@
                         android:textColor="@color/purple_500" />
 
                     <TextView
-                        android:id="@+id/tvTempValue"
+                        android:id="@+id/tvTempA0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:text="Temp: --.- °C"
+                        android:text="Sensor A0: --.- °C"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvCurrentValue"
+                        android:id="@+id/tvTempA1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Corrente: --.- mA"
+                        android:text="Sensor A1: --.- °C"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTempA2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Sensor A2: --.- °C"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvTempA3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Sensor A3: --.- °C"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -114,6 +132,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Sentido: ---"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvInvStatusNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Estado: ---"
+                        android:textColor="@color/purple_700"
+                        android:textStyle="bold"
                         android:textSize="16sp" />
 
                     <TextView

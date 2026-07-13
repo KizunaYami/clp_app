@@ -20,8 +20,8 @@ import retrofit2.Response;
 public class AnalogicasCLPActivity extends AppCompatActivity {
     
     private SeekBar seekBarDAC0, seekBarDAC1, seekBarFreq;
-    private TextView tvTempValue, tvCurrentValue;
-    private TextView tvInvStatus, tvInvFreq, tvInvRPM, tvFreqLabel;
+    private TextView tvTempA0, tvTempA1, tvTempA2, tvTempA3;
+    private TextView tvInvStatus, tvInvStatusNome, tvInvFreq, tvInvRPM, tvFreqLabel;
     private TextView tvDAC0Label, tvDAC1Label;
     
     private String acaoPendente = null;
@@ -32,9 +32,12 @@ public class AnalogicasCLPActivity extends AppCompatActivity {
         setContentView(R.layout.activity_analogicas_clp);
         setTitle("TELEMETRIA E CONTROLE");
 
-        tvTempValue = findViewById(R.id.tvTempValue);
-        tvCurrentValue = findViewById(R.id.tvCurrentValue);
+        tvTempA0 = findViewById(R.id.tvTempA0);
+        tvTempA1 = findViewById(R.id.tvTempA1);
+        tvTempA2 = findViewById(R.id.tvTempA2);
+        tvTempA3 = findViewById(R.id.tvTempA3);
         tvInvStatus = findViewById(R.id.tvInvStatus);
+        tvInvStatusNome = findViewById(R.id.tvInvStatusNome);
         tvInvFreq = findViewById(R.id.tvInvFreq);
         tvInvRPM = findViewById(R.id.tvInvRPM);
         
@@ -100,15 +103,23 @@ public class AnalogicasCLPActivity extends AppCompatActivity {
     }
 
     private void atualizarInterfaces(JSONObject json) {
-        double temp = json.optDouble("Temp_A0", 0.0);
-        double current = json.optDouble("CLP_A1", 0.0);
-        tvTempValue.setText(String.format(Locale.getDefault(), "Temp: %.1f °C", temp));
-        tvCurrentValue.setText(String.format(Locale.getDefault(), "Corrente: %.1f mA", current));
+        double t0 = json.optDouble("Temp_A0", 0.0);
+        double t1 = json.optDouble("Temp_A1", 0.0);
+        double t2 = json.optDouble("Temp_A2", 0.0);
+        double t3 = json.optDouble("Temp_A3", 0.0);
+        
+        tvTempA0.setText(String.format(Locale.getDefault(), "Sensor A0: %.1f °C", t0));
+        tvTempA1.setText(String.format(Locale.getDefault(), "Sensor A1: %.1f °C", t1));
+        tvTempA2.setText(String.format(Locale.getDefault(), "Sensor A2: %.1f °C", t2));
+        tvTempA3.setText(String.format(Locale.getDefault(), "Sensor A3: %.1f °C", t3));
 
         String sentido = json.optString("inv_s", "---");
+        String estadoNome = json.optString("inv_w_nome", "---");
         double freq = json.optDouble("inv_f", 0.0);
         int rpm = json.optInt("inv_r", 0);
+        
         tvInvStatus.setText("Sentido: " + sentido);
+        tvInvStatusNome.setText("Estado: " + estadoNome);
         tvInvFreq.setText(String.format(Locale.getDefault(), "Frequência: %.1f Hz", freq));
         tvInvRPM.setText("RPM: " + rpm);
     }

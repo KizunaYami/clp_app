@@ -31,10 +31,12 @@ public class SaidaDigitaisCLTActivity extends AppCompatActivity {
         switches = getSwitchs();
         tvLabels = getTextViews();
 
-        // Map labels to actual ESP32 Output Pins
+        // Map labels with names from web version
         String[] keys = Interface.getOutputKeys();
+        String[] names = Interface.getOutputNames();
         for (int i = 0; i < tvLabels.length; i++) {
-            tvLabels[i].setText("PIN " + keys[i].replace("Output_", ""));
+            String label = names[i] + " (GPIO " + keys[i].replace("Output_", "") + ")";
+            tvLabels[i].setText(label);
         }
         
         lerDadosCLP();
